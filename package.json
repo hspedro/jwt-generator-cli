@@ -1,0 +1,10 @@
+{
+  "name": "jwt-generator-cli",
+  "version": "1.0.0",
+  "description": "Generate JWT tokens from CLI",
+  "main": "jwt.ts",
+  "repository": "https://github.com/hspedro/jwt-generator-cli",
+  "author": "Pedro Soares <hspedro@profusion.mobi>",
+  "license": "MIT",
+  "private": false
+}
