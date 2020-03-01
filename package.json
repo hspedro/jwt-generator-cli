@@ -7,6 +7,9 @@
   "author": "Pedro Soares <hspedro@profusion.mobi>",
   "license": "MIT",
   "private": false,
+  "scripts": {
+    "lint": "eslint --max-warnings=0 --ext .js bin"
+  },
   "engines": {
     "node": ">=8.16.2"
   },
@@ -25,6 +28,8 @@
   },
   "husky": {
     "hooks": {
+      "pre-commit": "yarn lint",
+      "pre-push": "yarn lint",
       "commit-msg": "commitlint -E HUSKY_GIT_PARAMS"
     }
   }
