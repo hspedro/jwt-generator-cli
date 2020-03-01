@@ -29,7 +29,7 @@ const { argv } = yargs
   })
   .option('payload', {
     alias: 'p',
-    default: '',
+    default: '{}',
     description: `Payload to be encoded with JWT. This is a string that will be
     parsed as JSON`,
     type: 'string',
