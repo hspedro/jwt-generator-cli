@@ -5,14 +5,21 @@ const uuidv4 = require('uuid/v4');
 const { argv } = yargs
   .option('algorithm', {
     alias: 'a',
-    description: `Algorithm to sign JWT, use one of the following: [
-      "HS256", "HS384", "HS512",
-      "RS256", "RS384", "RS512"
-      "ES256", "ES384", "ES512",
-      "PS256", "PS384", "PS512",
-      "none"
-    ];
-`,
+    description: 'Algorithm to sign JWT',
+    choices: [
+      'HS256',
+      'HS384',
+      'HS512',
+      'RS256',
+      'RS384',
+      'RS512',
+      'ES256',
+      'ES384',
+      'ES512',
+      'PS256',
+      'PS384',
+      'PS512',
+    ],
     type: 'string',
   })
   .option('secret', {
@@ -27,6 +34,7 @@ const { argv } = yargs
     parsed as JSON`,
     type: 'string',
   })
+  .demandOption(['algorithm'])
   .help()
   .alias('help', 'h');
 
