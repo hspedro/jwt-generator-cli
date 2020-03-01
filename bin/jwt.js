@@ -1,7 +1,7 @@
 const yargs = require('yargs');
+const jwt = require('jsonwebtoken');
 const uuidv4 = require('uuid/v4');
 
-// eslint-disable-next-line no-unused-vars
 const { argv } = yargs
   .option('algorithm', {
     alias: 'a',
@@ -50,5 +50,25 @@ const parsePayload = async input => {
   return parsed;
 };
 
-// eslint-disable-next-line no-unused-vars
 const parseSecret = secret => secret || uuidv4();
+
+const generateToken = async () => {
+  const secret = parseSecret(argv.secret);
+  const payload = await parsePayload(argv.payload);
+  return jwt.sign(payload, secret, {
+    algorithm: argv.algorithm,
+  });
+};
+
+// eslint-disable-next-line no-async-promise-executor
+new Promise(async (resolve, reject) => {
+  let token;
+  try {
+    token = await generateToken();
+  } catch (e) {
+    reject(e);
+  }
+  resolve(token);
+})
+  .then(token => console.log(token))
+  .catch(error => console.error(error));
