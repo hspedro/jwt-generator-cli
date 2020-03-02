@@ -8,7 +8,6 @@ const parseSecret = secret => secret || uuidv4();
 
 const { argv } = yargs
   .option('algorithm', {
-    alias: 'a',
     description: 'Algorithm to sign JWT',
     choices: [
       'HS256',
@@ -75,12 +74,10 @@ const { argv } = yargs
     type: 'string',
   })
   .option('secret', {
-    alias: 's',
     description: 'Secret Key to be used on creation JWT token',
     type: 'string',
   })
   .option('payload', {
-    alias: 'p',
     default: '{}',
     description: `Payload to be encoded with JWT. This is a string that will be
     parsed as JSON`,
