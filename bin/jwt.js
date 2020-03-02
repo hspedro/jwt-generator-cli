@@ -24,6 +24,54 @@ const { argv } = yargs
     ],
     type: 'string',
   })
+  .option('expiresIn', {
+    description: `Identifies the expiration time on or after which the JWT MUST
+    NOT be accepted for processing. Can be expressed as a string describing
+    time span. Eg: 60, '2 days', '10h', '7d'.
+    More info: [zeit/ms](https://github.com/zeit/ms.js).`,
+    type: 'string',
+  })
+  .option('notBefore', {
+    description: `Identifies the time before which the JWT MUST NOT be accepted
+    for processing. Can be expressed as a string describing time span.
+    Eg: 60, '2 days', '10h', '7d'.
+    More info: [zeit/ms](https://github.com/zeit/ms.js).`,
+    type: 'string',
+  })
+  .option('audience', {
+    description: `Identifies the recipients that the JWT is intended for. This
+    can be a single string or an array of strings comma separated.
+    Eg: audience1,audience2,audience3`,
+    type: 'string',
+  })
+  .coerce('audience', audience => audience.split(','))
+  .option('subject', {
+    description: 'Identifies the principal that is the subject of the JWT',
+    type: 'string',
+  })
+  .option('issuer', {
+    description: 'Identifies the principal that issued the JWT.',
+    type: 'string',
+  })
+  .option('jwtid', {
+    description: 'Specific ID associated with the generated JWT.',
+    type: 'string',
+  })
+  .option('mutatePayload', {
+    description: `If true, the sign function will modify the payload object
+    directly. This is useful if you need a raw reference to the payload after
+    claims have been applied to it but before it has been encoded into a token`,
+    type: 'boolean',
+  })
+  .option('header', {
+    description: `Header to be encoded in the token. This is a string that will
+    be parsed as JSON`,
+    type: 'string',
+  })
+  .option('encoding', {
+    description: 'Content-Encoding to be used',
+    type: 'string',
+  })
   .option('secret', {
     alias: 's',
     description: 'Secret Key to be used on creation JWT token',
@@ -36,14 +84,36 @@ const { argv } = yargs
     parsed as JSON`,
     type: 'string',
   })
-  .coerce({ payload: JSON.parse, secret: parseSecret })
+  .coerce({ payload: JSON.parse, header: JSON.parse, secret: parseSecret })
   .demandOption(['algorithm'])
   .help()
   .alias('help', 'h');
 
-const generateToken = async ({ payload, secret, algorithm }) => {
+const generateToken = async ({
+  payload,
+  secret,
+  algorithm,
+  expiresIn,
+  notBefore,
+  audience,
+  subject,
+  issuer,
+  jwtid,
+  mutatePayload,
+  header,
+  encoding,
+}) => {
   return jwt.sign(payload, secret, {
     algorithm,
+    expiresIn,
+    notBefore,
+    audience,
+    subject,
+    issuer,
+    jwtid,
+    mutatePayload,
+    header,
+    encoding,
   });
 };
 
