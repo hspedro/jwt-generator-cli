@@ -7,6 +7,9 @@
   "author": "Pedro Soares <hspedro@profusion.mobi>",
   "license": "MIT",
   "private": false,
+  "bin": {
+    "jwt-generator": "bin/jwt.js"
+  },
   "scripts": {
     "lint": "eslint --max-warnings=0 --ext .js bin"
   },

@@ -15,5 +15,5 @@ npm install jwt-generator-cli
 ## Usage
 
 ```bash
-jwt -h
+jwt-generator -h
 ```
