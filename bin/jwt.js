@@ -1,3 +1,5 @@
+#! /usr/bin/env node
+
 const yargs = require('yargs');
 const jwt = require('jsonwebtoken');
 const uuidv4 = require('uuid/v4');
