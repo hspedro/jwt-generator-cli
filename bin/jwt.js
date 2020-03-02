@@ -88,33 +88,14 @@ const { argv } = yargs
   .help()
   .alias('help', 'h');
 
-const generateToken = async ({
-  payload,
-  secret,
-  algorithm,
-  expiresIn,
-  notBefore,
-  audience,
-  subject,
-  issuer,
-  jwtid,
-  mutatePayload,
-  header,
-  encoding,
-}) => {
-  return jwt.sign(payload, secret, {
-    algorithm,
-    expiresIn,
-    notBefore,
-    audience,
-    subject,
-    issuer,
-    jwtid,
-    mutatePayload,
-    header,
-    encoding,
-  });
-};
+Object.keys(argv).forEach(
+  key =>
+    (argv[key] === undefined || key === '_' || key === '$0') &&
+    delete argv[key],
+);
+
+const generateToken = async ({ payload, secret, ...options }) =>
+  jwt.sign(payload, secret, options);
 
 // eslint-disable-next-line no-async-promise-executor
 new Promise(async (resolve, reject) => {
