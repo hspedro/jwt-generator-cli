@@ -2,6 +2,8 @@ const yargs = require('yargs');
 const jwt = require('jsonwebtoken');
 const uuidv4 = require('uuid/v4');
 
+const parseSecret = secret => secret || uuidv4();
+
 const { argv } = yargs
   .option('algorithm', {
     alias: 'a',
@@ -34,29 +36,14 @@ const { argv } = yargs
     parsed as JSON`,
     type: 'string',
   })
+  .coerce({ payload: JSON.parse, secret: parseSecret })
   .demandOption(['algorithm'])
   .help()
   .alias('help', 'h');
 
-// eslint-disable-next-line no-unused-vars
-const parsePayload = async input => {
-  let parsed = '';
-  try {
-    parsed = await JSON.parse(input);
-  } catch (e) {
-    // eslint-disable-next-line no-console
-    console.error('Error while generating payload: ', e);
-  }
-  return parsed;
-};
-
-const parseSecret = secret => secret || uuidv4();
-
-const generateToken = async () => {
-  const secret = parseSecret(argv.secret);
-  const payload = await parsePayload(argv.payload);
+const generateToken = async ({ payload, secret, algorithm }) => {
   return jwt.sign(payload, secret, {
-    algorithm: argv.algorithm,
+    algorithm,
   });
 };
 
@@ -64,7 +51,7 @@ const generateToken = async () => {
 new Promise(async (resolve, reject) => {
   let token;
   try {
-    token = await generateToken();
+    token = await generateToken(argv);
   } catch (e) {
     reject(e);
   }
