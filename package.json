@@ -20,7 +20,7 @@
     "jsonwebtoken": "^9.0.0",
     "minimist": "^1.2.8",
     "uuid": "^9.0.0",
-    "yargs": "^17.7.1"
+    "yargs": "^17.7.2"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.5.1",
