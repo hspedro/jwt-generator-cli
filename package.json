@@ -17,7 +17,7 @@
     "node": ">=8.16.2"
   },
   "dependencies": {
-    "jsonwebtoken": "^9.0.0",
+    "jsonwebtoken": "^9.0.1",
     "minimist": "^1.2.8",
     "uuid": "^9.0.0",
     "yargs": "^17.7.1"
